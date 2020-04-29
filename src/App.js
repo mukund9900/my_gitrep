@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React , {Component}from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import RESULT from './Result';
+import KEYPAD from './buttons/BUTTON'
+
+
+
+
+export default class App extends Component {
+    constructor(){
+        super();
+
+        this.state = {
+            result: ""
+        }
+    }
+
+    onClick = button => {
+
+        if(button === "="){
+            this.calculate()
+        }
+
+        else {
+            this.setState({
+                result: this.state.result + button
+            })
+        }
+    };
+
+
+    calculate = () => {
+            this.setState({
+                result: (eval(this.state.result) || "" ) + ""
+            })
+    };
+
+    render() {
+        return (
+            <div>
+                <div className="calculator-body">
+                    <h1>Simple Calculator</h1>
+                    <RESULT result={this.state.result}/>
+                    <KEYPAD onClick={this.onClick}/>
+                </div>
+            </div>
+        );
+    }
 }
-
-export default App;
